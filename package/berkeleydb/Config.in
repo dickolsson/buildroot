@@ -19,4 +19,10 @@ config BR2_PACKAGE_BERKELEYDB_TOOLS
 	  Install berkeleydb tools, mostly useful for debugging
 	  purposes.
 
+config BR2_PACKAGE_BERKELEYDB_4_8
+	bool "legacy version 4.8.x"
+	help
+	  Install version 4.8.x, mostly useful for legacy
+	  dependencies.
+
 endif
