@@ -11,7 +11,7 @@ S6_LINUX_INIT_LICENSE_FILES = COPYING
 S6_LINUX_INIT_DEPENDENCIES = s6 s6-linux-utils s6-portable-utils
 
 S6_LINUX_INIT_CONF_OPTS = \
-	--prefix=/usr \
+	--prefix=/ \
 	--with-sysdeps=$(STAGING_DIR)/usr/lib/skalibs/sysdeps \
 	--with-include=$(STAGING_DIR)/usr/include \
 	--with-dynlib=$(STAGING_DIR)/usr/lib \

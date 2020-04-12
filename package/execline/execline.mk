@@ -12,7 +12,7 @@ EXECLINE_INSTALL_STAGING = YES
 EXECLINE_DEPENDENCIES = skalibs
 
 EXECLINE_CONF_OPTS = \
-	--prefix=/usr \
+	--prefix=/ \
 	--with-sysdeps=$(STAGING_DIR)/usr/lib/skalibs/sysdeps \
 	--with-include=$(STAGING_DIR)/usr/include \
 	--with-dynlib=$(STAGING_DIR)/usr/lib \
