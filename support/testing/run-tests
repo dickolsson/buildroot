@@ -114,7 +114,6 @@ def main():
     BRConfigTest.timeout_multiplier = args.timeout_multiplier
 
     nose2_args = ["-v",
-                  "-N", str(args.testcases),
                   "-s", test_dir,
                   "-c", os.path.join(test_dir, "conf/unittest.cfg")]
 
