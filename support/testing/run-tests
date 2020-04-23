@@ -32,11 +32,16 @@ def main():
                         help='BR2_JLEVEL to use for each testcase')
     parser.add_argument('--timeout-multiplier', type=int, default=1,
                         help='increase timeouts (useful for slow machines)')
+    parser.add_argument('-w', '--working-dir',
+                        help='working directory and where to start looking for tests')
 
     args = parser.parse_args()
 
     script_path = os.path.realpath(__file__)
     test_dir = os.path.dirname(script_path)
+
+    if args.working_dir is not None:
+        test_dir = args.working_dir
 
     if args.stdout:
         BRConfigTest.logtofile = False
