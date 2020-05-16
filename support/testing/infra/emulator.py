@@ -30,7 +30,10 @@ class Emulator(object):
     #
     # options: array of command line options to pass to Qemu
     #
-    def boot(self, arch, kernel=None, kernel_cmdline=None, options=None):
+    # cwd: Current working directory to use when running Qemu. This is useful
+    # when using semi-hosting of binaries for Qemu.
+    #
+    def boot(self, arch, kernel=None, kernel_cmdline=None, options=None, cwd=None):
         if arch in ["armv7", "armv5"]:
             qemu_arch = "arm"
         else:
@@ -77,7 +80,8 @@ class Emulator(object):
         self.qemu = pexpect.spawn(qemu_cmd[0], qemu_cmd[1:],
                                   timeout=5 * self.timeout_multiplier,
                                   encoding='utf-8',
-                                  env={"QEMU_AUDIO_DRV": "none"})
+                                  env={"QEMU_AUDIO_DRV": "none"},
+                                  cwd=cwd)
         # We want only stdout into the log to avoid double echo
         self.qemu.logfile_read = self.logfile
 
