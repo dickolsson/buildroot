@@ -42,7 +42,7 @@ class Emulator(object):
         qemu_cmd = ["qemu-system-{}".format(qemu_arch),
                     "-serial", "stdio",
                     "-display", "none",
-                    "-m", "256"]
+                    "-m", "1024"]
 
         if options:
             qemu_cmd += options
