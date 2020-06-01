@@ -1,0 +1,21 @@
+diff --git a/host/xtest/adbg/src/adbg_run.c b/host/xtest/adbg/src/adbg_run.c
+index 8d4e31f..f1265be 100644
+--- a/host/xtest/adbg/src/adbg_run.c
++++ b/host/xtest/adbg/src/adbg_run.c
+@@ -122,11 +122,11 @@ static int ADBG_RunSuite(
+ 	int failed_test = 0;
+ 	struct adbg_case_def *case_def = NULL;
+ 
+-	Do_ADBG_Log("######################################################");
+-	Do_ADBG_Log("#");
+-	Do_ADBG_Log("# %s", Runner_p->Suite_p->SuiteID_p);
+-	Do_ADBG_Log("#");
+-	Do_ADBG_Log("######################################################");
++	Do_ADBG_Log("******************************************************");
++	Do_ADBG_Log("*");
++	Do_ADBG_Log("* %s", Runner_p->Suite_p->SuiteID_p);
++	Do_ADBG_Log("*");
++	Do_ADBG_Log("******************************************************");
+ 
+ 	TAILQ_FOREACH(case_def, &Runner_p->Suite_p->cases, link) {
+ 		if (argc > 0) {
