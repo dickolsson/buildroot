@@ -13,4 +13,9 @@ define HOST_CHECKSEC_INSTALL_CMDS
 	$(INSTALL) -D -m 0755 $(@D)/checksec $(HOST_DIR)/bin/checksec
 endef
 
+define CHECKSEC_INSTALL_TARGET_CMDS
+	$(INSTALL) -D -m 0755 $(@D)/checksec $(TARGET_DIR)/bin/checksec
+endef
+
+$(eval $(generic-package))
 $(eval $(host-generic-package))
