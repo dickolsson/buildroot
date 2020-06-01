@@ -38,6 +38,22 @@ config BR2_PACKAGE_BITCOIN
 
 	  https://bitcoincore.org
 
+if BR2_PACKAGE_BITCOIN
+
+config BR2_PACKAGE_BITCOIN_ENABLE_WALLET
+	bool "enable wallet"
+	select BR2_PACKAGE_BERKELEYDB
+	select BR2_PACKAGE_BERKELEYDB_4_8
+	help
+	  Enable wallet functionality.
+
+config BR2_PACKAGE_BITCOIN_ENABLE_HARDENING
+	bool "enable hardening"
+	help
+	  Harden the resulting executables.
+
+endif
+
 comment "bitcoin needs a toolchain w/ C++, threads, wchar"
 	depends on BR2_PACKAGE_BITCOIN_ARCH_SUPPORTS
 	depends on !BR2_INSTALL_LIBSTDCPP || \
