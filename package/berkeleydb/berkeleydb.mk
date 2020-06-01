@@ -20,6 +20,11 @@ BERKELEYDB_BINARIES = db_archive db_checkpoint db_deadlock db_dump \
 	db_hotbackup db_load db_log_verify db_printlog db_recover db_replicate \
 	db_stat db_tuner db_upgrade db_verify
 
+# Override the default version if the 4.8.x option was selected.
+ifeq ($(BR2_PACKAGE_BERKELEYDB_4_8),y)
+BERKELEYDB_VERSION = 4.8.30
+endif
+
 # build directory can't be the directory where configure are there, so..
 define BERKELEYDB_CONFIGURE_CMDS
 	(cd $(@D)/build_unix; rm -rf config.cache; \
