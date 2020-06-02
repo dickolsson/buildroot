@@ -1,0 +1,6 @@
+config BR2_TARGET_EDK2_PLATFORMS
+	bool "edk2-platform"
+	help
+	  EDK II description files for all supported platforms.
+
+	  https://github.com/tianocore/edk2-platforms
