@@ -8,9 +8,92 @@ config BR2_TARGET_EDK2
 
 if BR2_TARGET_EDK2
 
-config BR2_TARGET_EDK2_PLATFORM
-	string "EDK2 platform"
+config BR2_TARGET_EDK2_DEBUG
+    bool "Debug build"
+    help
+      Use the debug build type.
+
+config BR2_TARGET_EDK2_NEEDS_EDK2_PLATFORMS
+    bool "Needs edk2-platforms definitions"
+    select BR2_TARGET_EDK2_PLATFORMS
+
+choice
+    prompt "Package"
+    default BR2_TARGET_EDK2_PACKAGE_ARM_VIRT
+
+config BR2_TARGET_EDK2_PACKAGE_ARM_VIRT
+	bool "ARM Virt"
 	help
-	  Target platform to build for.
+	  Package for ARM Virt with support for virtualization platforms like QEMU and Xen.
+
+config BR2_TARGET_EDK2_PACKAGE_ARM_VEXPRESS
+	bool "ARM VExpress"
+	select BR2_TARGET_EDK2_NEEDS_EDK2_PLATFORMS
+	help
+	  Package for ARM Versatile Express with support for both ARMv7 and AARCH64 platforms.
+
+config BR2_TARGET_EDK2_PACKAGE_CUSTOM
+	bool "Custom package"
+	help
+	  Use a custom package path defined as BR2_TARGET_EDK2_PACKAGE_CUSTOM_NAME.
+	  This option is useful if a package exist in the EDK2 tree, but without a pre-defined choice in Buildroot.
+
+endchoice
+
+if BR2_TARGET_EDK2_PACKAGE_CUSTOM
+
+config BR2_TARGET_EDK2_PACKAGE_CUSTOM_NAME
+    string "Custom package path"
+    depends on BR2_TARGET_EDK2_PACKAGE_CUSTOM
+    help
+      Enter the relative path to the package, starting from the EDK2 workspace root.
+
+endif
+
+choice
+    prompt "Platform"
+    default BR2_TARGET_EDK2_PLATFORM_ARM_VIRT_QEMU
+
+config BR2_TARGET_EDK2_PLATFORM_ARM_VIRT_QEMU
+	bool "ARM Virt Qemu"
+	depends on BR2_TARGET_EDK2_PACKAGE_ARM_VIRT
+	help
+	  Configuration for Qemu targeting the ARM or AArch64 virt machine.
+
+config BR2_TARGET_EDK2_PLATFORM_ARM_VIRT_XEN
+	bool "ARM Virt Xen"
+	depends on BR2_TARGET_EDK2_PACKAGE_ARM_VIRT
+	help
+	  Configuration for Xen targeting ARM or AArch64.
+
+config BR2_TARGET_EDK2_PLATFORM_ARM_VEXPRESS_FVP_AARCH64
+	bool "ARM VExpress FVP Aarch64"
+	depends on BR2_TARGET_EDK2_PACKAGE_ARM_VEXPRESS
+	help
+	  Configuration for ARM Versatile Express targeting the Fixed Virtual Platform (FVP) AArch64 platform.
+
+config BR2_TARGET_EDK2_PLATFORM_CUSTOM
+	bool "Custom platform"
+	help
+	  Use a custom platform name defined as BR2_TARGET_EDK2_PLATFORM_CUSTOM_NAME.
+	  This option is useful if a platform exist in the EDK2 tree, but without a pre-defined choice in Buildroot.
+
+endchoice
+
+if BR2_TARGET_EDK2_PLATFORM_CUSTOM
+
+config BR2_TARGET_EDK2_PLATFORM_CUSTOM_NAME
+    string "Custom platform name"
+    depends on BR2_TARGET_EDK2_PLATFORM_CUSTOM
+    help
+      Enter the platform name, excluding the .dsc file name extension.
+
+config BR2_TARGET_EDK2_FD_CUSTOM_NAME
+    string "Custom firmware device name"
+    depends on BR2_TARGET_EDK2_PLATFORM_CUSTOM
+    help
+      Enter the firmware device (FD) image name, excluding the .fd file name extension.
+
+endif
 
 endif
