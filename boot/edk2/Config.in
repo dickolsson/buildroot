@@ -13,10 +13,6 @@ config BR2_TARGET_EDK2_DEBUG
     help
       Use the debug build type.
 
-config BR2_TARGET_EDK2_NEEDS_EDK2_PLATFORMS
-    bool "Needs edk2-platforms definitions"
-    select BR2_TARGET_EDK2_PLATFORMS
-
 choice
     prompt "Package"
     default BR2_TARGET_EDK2_PACKAGE_ARM_VIRT
@@ -28,7 +24,7 @@ config BR2_TARGET_EDK2_PACKAGE_ARM_VIRT
 
 config BR2_TARGET_EDK2_PACKAGE_ARM_VEXPRESS
 	bool "ARM VExpress"
-	select BR2_TARGET_EDK2_NEEDS_EDK2_PLATFORMS
+	depends on BR2_TARGET_EDK2_PLATFORMS
 	help
 	  Package for ARM Versatile Express with support for both ARMv7 and AARCH64 platforms.
 
