@@ -1,5 +1,5 @@
 config BR2_TARGET_EDK2_PLATFORMS
-	bool "edk2-platform"
+	bool "EDK2 platform definitions"
 	help
 	  EDK II description files for all supported platforms.
 
