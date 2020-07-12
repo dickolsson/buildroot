@@ -52,6 +52,12 @@ OPTEE_OS_MAKE_OPTS += PLATFORM_FLAVOR=$(call qstrip,$(BR2_TARGET_OPTEE_OS_PLATFO
 endif
 OPTEE_OS_MAKE_OPTS += $(call qstrip,$(BR2_TARGET_OPTEE_OS_ADDITIONAL_VARIABLES))
 
+ifeq ($(BR2_TARGET_OPTEE_OS_DEBUG),y)
+OPTEE_OS_MAKE_OPTS += \
+	DEBUG=1 \
+	CFG_TEE_CORE_LOG_LEVEL=3
+endif
+
 # Requests OP-TEE OS to build from subdirectory out/ of its sourcetree
 # root path otherwise the output directory path depends on the target
 # platform name.
