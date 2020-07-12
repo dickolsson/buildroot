@@ -107,4 +107,9 @@ config BR2_TARGET_OPTEE_OS_CORE_IMAGES
 	  Names of generated image files that are installed in the
 	  output images/ directory.
 
+config BR2_TARGET_OPTEE_OS_DEBUG
+	bool "Build in debug mode"
+	help
+	  Enable this option to build OP-TEE OS with DEBUG=1.
+
 endif # BR2_TARGET_OPTEE_OS
