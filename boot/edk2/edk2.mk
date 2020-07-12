@@ -3,7 +3,7 @@ EDK2_SITE = https://github.com/tianocore/edk2
 EDK2_SITE_METHOD = git
 EDK2_LICENSE = BSD-2-Clause
 EDK2_LICENSE_FILE = License.txt
-EDK2_DEPENDENCIES = host-python3
+EDK2_DEPENDENCIES = host-python3 host-acpica
 
 # While it's not encouraged to use git submodules with Buildroot,
 # the EDK2 setup is rather special, so we're resorting to using its
@@ -46,6 +46,9 @@ endif
 ifeq ($(BR2_TARGET_EDK2_PLATFORM_ARM_VIRT_QEMU),y)
 EDK2_PLATFORM_NAME = ArmVirtQemu
 EDK2_FD_NAME = QEMU_EFI
+else ifeq ($(BR2_TARGET_EDK2_PLATFORM_ARM_VIRT_QEMU_KERNEL),y)
+EDK2_PLATFORM_NAME = ArmVirtQemuKernel
+EDK2_FD_NAME = QEMU_EFI
 else ifeq ($(BR2_TARGET_EDK2_PLATFORM_ARM_VIRT_XEN),y)
 EDK2_PLATFORM_NAME = ArmVirtXen
 EDK2_FD_NAME = XEN_EFI
@@ -68,6 +71,7 @@ define EDK2_BUILD_CMDS
 	export WORKSPACE=$(@D) && \
 	export PACKAGES_PATH=$(EDK2_PACKAGES_PATH) && \
 	export PYTHON_COMMAND=$(HOST_DIR)/bin/python3 && \
+	export IASL_PREFIX=$(BUILD_DIR)/host-acpica-$(ACPICA_VERSION)/generate/unix/bin/ && \
 	source $(@D)/edksetup.sh && \
 	$(TARGET_MAKE_ENV) $(MAKE) $(EDK2_MAKE_OPTS) && $(EDK2_MAKE_TARGETS)
 endef

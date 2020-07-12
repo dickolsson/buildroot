@@ -51,10 +51,19 @@ choice
     default BR2_TARGET_EDK2_PLATFORM_ARM_VIRT_QEMU
 
 config BR2_TARGET_EDK2_PLATFORM_ARM_VIRT_QEMU
-	bool "ARM Virt Qemu"
+	bool "ARM Virt Qemu (flash)"
 	depends on BR2_TARGET_EDK2_PACKAGE_ARM_VIRT
 	help
 	  Configuration for Qemu targeting the ARM or AArch64 virt machine.
+	  This platform will only boot from flash address 0x0. It should therefore be used as the first bootloader.
+
+config BR2_TARGET_EDK2_PLATFORM_ARM_VIRT_QEMU_KERNEL
+	bool "ARM Virt Qemu (kernel)"
+	depends on BR2_TARGET_EDK2_PACKAGE_ARM_VIRT
+	help
+	  Configuration for Qemu targeting the ARM or AArch64 virt machine.
+	  This platform can boot from either flash address 0x0 or via the Linux boot protocol. It can therefore be loaded
+	  by a previous bootloader like ARM Trusted Firmware or OP-TEE.
 
 config BR2_TARGET_EDK2_PLATFORM_ARM_VIRT_XEN
 	bool "ARM Virt Xen"
