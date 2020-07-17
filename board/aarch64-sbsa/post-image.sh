@@ -23,4 +23,8 @@ if grep -Eq "^BR2_TARGET_ARM_TRUSTED_FIRMWARE_PLATFORM=\"qemu_sbsa\"$" ${BR2_CON
 elif grep -Eq "^BR2_TARGET_ARM_TRUSTED_FIRMWARE_PLATFORM=\"qemu\"$" ${BR2_CONFIG}; then
   resize_or_link_flash "bl1.bin" "secureflash.bin" "64"
   resize_or_link_flash "fip.bin" "flash0.bin" "64"
+
+elif grep -Eq "^BR2_TARGET_ARM_TRUSTED_FIRMWARE_PLATFORM=\"fvp\"$" ${BR2_CONFIG}; then
+  resize_or_link_flash "bl1.bin" "secureflash.bin"
+  resize_or_link_flash "fip.bin" "flash0.bin"
 fi

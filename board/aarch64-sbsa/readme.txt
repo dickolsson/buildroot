@@ -12,6 +12,7 @@ The following configurations currently provide SBBR firmware:
 
 - qemu_aarch64_sbsa_sbbr_defconfig: An implementation of SBBR for QEMU SBSA
 - qemu_aarch64_virt_sbbr_defconfig: An implementation of SBBR for QEMU Virt
+- arm_foundationv8_sbbr_defconfig: An implementation of SBBR for ARM Foundation
 
 Building and booting under QEMU SBSA
 ====================================
@@ -43,3 +44,19 @@ $ qemu-system-aarch64 \
 	-drive file=output/images/flash0.bin,if=pflash,format=raw \
 	-drive file=output/images/disk.img,if=none,format=raw,id=hd0 \
 	-device virtio-blk-device,drive=hd0
+
+Bulding and booting under ARM Foundation
+========================================
+
+$ make arm_foundationv8_sbbr_defconfig
+$ make
+$ Foundation_Platform \
+	--disable-analytics \
+	--no-visualization \
+	--arm-v8.0 \
+	--secure-memory \
+	--gicv3 \
+	--cores=4 \
+	--data=output/images/secureflash.bin@0x0 \
+	--nsdata=output/images/flash0.bin@0x08000000 \
+	--block-device=output/images/disk.img
