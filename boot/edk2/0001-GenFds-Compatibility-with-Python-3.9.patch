@@ -1,0 +1,35 @@
+From 685ad1d101677f967597a2956f3becd94b49c796 Mon Sep 17 00:00:00 2001
+From: Dick Olsson <hi@senzilla.io>
+Date: Fri, 18 Dec 2020 21:07:24 +0100
+Subject: [edk2/master PATCH 1/1] GenFds: Compatibility with Python 3.9
+
+Python 3.9 removed the tostring() and fromstring() methods:
+https://docs.python.org/3/whatsnew/3.9.html#removed
+
+Signed-off-by: Dick Olsson <hi@senzilla.io>
+---
+ BaseTools/Source/Python/GenFds/GenFdsGlobalVariable.py | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/BaseTools/Source/Python/GenFds/GenFdsGlobalVariable.py b/BaseTools/Source/Python/GenFds/GenFdsGlobalVariable.py
+index dc1727c466..124dc43199 100644
+--- a/BaseTools/Source/Python/GenFds/GenFdsGlobalVariable.py
++++ b/BaseTools/Source/Python/GenFds/GenFdsGlobalVariable.py
+@@ -463,12 +463,12 @@ class GenFdsGlobalVariable:
+                     GenFdsGlobalVariable.SecCmdList.append(' '.join(Cmd).strip())
+             else:
+                 SectionData = array('B', [0, 0, 0, 0])
+-                SectionData.fromstring(Ui.encode("utf_16_le"))
++                SectionData.frombytes(Ui.encode("utf_16_le"))
+                 SectionData.append(0)
+                 SectionData.append(0)
+                 Len = len(SectionData)
+                 GenFdsGlobalVariable.SectionHeader.pack_into(SectionData, 0, Len & 0xff, (Len >> 8) & 0xff, (Len >> 16) & 0xff, 0x15)
+-                SaveFileOnChange(Output, SectionData.tostring())
++                SaveFileOnChange(Output, SectionData.tobytes())
+ 
+         elif Ver:
+             Cmd += ("-n", Ver)
+-- 
+2.25.1
+
