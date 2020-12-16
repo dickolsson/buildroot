@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -e
+
+BOARD_DIR="$(dirname $0)"
+EFI_PART=${BINARIES_DIR}/efi-part
+EFI_DIR=${EFI_PART}/EFI/BOOT
+
+# Create the EFI system partition with startup script and kernel
+# executable according to the UEFI standard.
+rm -rf ${EFI_DIR}
+mkdir -p ${EFI_DIR}
+cp ${BOARD_DIR}/startup.nsh ${EFI_PART}/
+ln -sf ${BINARIES_DIR}/Image ${EFI_DIR}/bootaa64.efi
