@@ -9,12 +9,7 @@ EFI_DIR=${BINARIES_DIR}/efi-part/EFI/BOOT
 mkdir -p ${EFI_DIR}
 ln -sf ${BINARIES_DIR}/Image ${EFI_DIR}/bootaa64.efi
 
-# Function taking file $1 as input and outputs file $2 padded to size $3.
-function resize_flash {
-  dd if=/dev/zero of="${BINARIES_DIR}/${2}" bs=1M count="${3}"
-  dd if="${BINARIES_DIR}/${1}" of="${BINARIES_DIR}/${2}" conv=notrunc
-}
-
-# The QEMU virt machine expects flash devices to be 64M.
-resize_flash bl1.bin bl1_resized.bin 64
-resize_flash fip.bin fip_resized.bin 64
+# The QEMU virt machine expects the BIOS flash device to be 64M.
+rm -rf ${BINARIES_DIR}/flash.bin
+dd if=${BINARIES_DIR}/bl1.bin of=${BINARIES_DIR}/flash.bin bs=4096 conv=notrunc
+dd if=${BINARIES_DIR}/fip.bin of=${BINARIES_DIR}/flash.bin seek=64 bs=4096 conv=notrunc

@@ -22,7 +22,6 @@ Run the emulation with:
     -smp 4 \
     -m 1024 \
     -nographic \
-    -drive file=output/images/bl1_resized.bin,if=pflash,format=raw \
-    -drive file=output/images/fip_resized.bin,if=pflash,format=raw \
+    -bios output/images/flash.bin \
 	-drive file=output/images/disk.img,if=none,format=raw,id=hd0 \
 	-device virtio-blk-device,drive=hd0
