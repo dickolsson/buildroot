@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-MBEDTLS_VERSION = 2.16.8
+MBEDTLS_VERSION = 2.24.0
 MBEDTLS_SITE = $(call github,ARMmbed,mbedtls,v$(MBEDTLS_VERSION))
 MBEDTLS_CONF_OPTS = \
 	-DENABLE_PROGRAMS=$(if $(BR2_PACKAGE_MBEDTLS_PROGRAMS),ON,OFF) \
@@ -68,4 +68,12 @@ else ifeq ($(BR2_microblaze)$(BR2_MIPS_CPU_MIPS32R6)$(BR2_MIPS_CPU_MIPS64R6),y)
 MBEDTLS_POST_CONFIGURE_HOOKS += MBEDTLS_DISABLE_ASM
 endif
 
+# As a host package we just make the source files available to other
+# packages to build with, e.g. boot/arm-trusted-firmware when configured
+# to build firmware for Trusted Board Boot (TBB).
+define HOST_MBEDTLS_INSTALL_CMDS
+	cp -rf $(@D) $(HOST_DIR)/share/mbedtls
+endef
+
 $(eval $(cmake-package))
+$(eval $(host-generic-package))
