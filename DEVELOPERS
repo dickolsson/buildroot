@@ -666,6 +666,23 @@ F:	package/libstrophe/
 N:	Derrick Lyndon Pallas <derrick@meter.com>
 F:	package/ipcalc/
 
+N:	Dick Olsson <hi@senzilla.io>
+F:	board/aarch64-efi/
+F:	board/pc/
+F:	board/qemu/aarch64-sbsa/
+F:	board/qemu/aarch64-virt-efi/
+F:	board/socionext/developerbox/
+F:	board/solidrun/macchiatobin-efi/
+F:	boot/arm-trusted-firmware/
+F:	boot/edk2/
+F:	configs/aarch64_efi_defconfig
+F:	configs/pc_x86_64_efi_defconfig
+F:	configs/qemu_aarch64_sbsa_defconfig
+F:	configs/qemu_aarch64_virt_efi_defconfig
+F:	configs/socionext_developerbox_defconfig
+F:	configs/solidrun_macchiatobin_efi_defconfig
+F:	package/edk2-platforms/
+
 N:	Dimitrios Siganos <dimitris@siganos.org>
 F:	package/wireless-regdb/
 
