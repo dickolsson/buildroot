@@ -1,0 +1,18 @@
+config BR2_TARGET_ARM_SCP_FIRMWARE
+	bool "ARM SCP Firmware"
+	depends on BR2_aarch64
+	help
+	  SCP-firmware provides a software reference implementation for the
+	  System Control Processor (SCP) and Manageability Control Processor
+	  (MCP) components found in several Arm Compute Sub-Systems.
+
+	  https://github.com/ARM-software/SCP-firmware
+
+if BR2_TARGET_ARM_SCP_FIRMWARE
+
+config BR2_TARGET_ARM_SCP_FIRMWARE_PRODUCT
+	string "SCP target product"
+	help
+	  The SCP firmware target product
+
+endif

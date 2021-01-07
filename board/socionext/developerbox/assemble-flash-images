@@ -12,3 +12,11 @@ rm -rf ${EFI_DIR}
 mkdir -p ${EFI_DIR}
 cp ${BOARD_DIR}/startup.nsh ${EFI_PART}/
 ln -sf ${BINARIES_DIR}/Image ${EFI_DIR}/bootaa64.efi
+
+# Fill an image with 1's and concatenate the ROM and RAM firmware into
+# a single image. This makes it easier to flash the firmware onto the
+# SPI flash of the SC2A11.
+CM3_BIN=${BINARIES_DIR}/CM3_IMAGE.bin
+tr "\000" "\377" < /dev/zero | dd of=${CM3_BIN} bs=1 count=196608
+dd if=${BINARIES_DIR}/scp_romfw.bin of=${CM3_BIN} bs=1 conv=notrunc seek=0
+dd if=${BINARIES_DIR}/scp_ramfw.bin of=${CM3_BIN} bs=1 seek=65536

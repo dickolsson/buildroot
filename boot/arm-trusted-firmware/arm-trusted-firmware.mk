@@ -109,6 +109,19 @@ ARM_TRUSTED_FIRMWARE_MAKE_OPTS += MV_DDR_PATH=$(MV_DDR_MARVELL_DIR)
 ARM_TRUSTED_FIRMWARE_DEPENDENCIES += mv-ddr-marvell
 endif
 
+ifeq ($(BR2_TARGET_ARM_SCP_FIRMWARE),y)
+ARM_TRUSTED_FIRMWARE_DEPENDENCIES += arm-scp-firmware
+# This SCP_BL2 variable isn't used by all platforms (mainly ARM FVP), but
+# we set it here for convenience. It makes the build setup a lot simpler.
+ARM_TRUSTED_FIRMWARE_MAKE_OPTS += SCP_BL2=$(BINARIES_DIR)/scp_ramfw.bin
+# SCP firmware for the SGI-575 only supports the SCMI driver.
+ifeq ($(ARM_TRUSTED_FIRMWARE_PLATFORM),sgi575)
+ARM_TRUSTED_FIRMWARE_MAKE_OPTS += CSS_USE_SCMI_SDS_DRIVER=1
+# SCP firmware for the SynQuacer Developerbox only supports SCMI driver.
+else ifeq ($(ARM_TRUSTED_FIRMWARE_PLATFORM),synquacer)
+ARM_TRUSTED_FIRMWARE_MAKE_OPTS += SQ_USE_SCMI_DRIVER=1
+endif
+
 ifeq ($(BR2_SSP_REGULAR),y)
 ARM_TRUSTED_FIRMWARE_MAKE_OPTS += ENABLE_STACK_PROTECTOR=default
 else ifeq ($(BR2_SSP_STRONG),y)

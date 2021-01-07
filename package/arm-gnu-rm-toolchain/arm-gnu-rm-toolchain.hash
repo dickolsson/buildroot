@@ -1,0 +1,5 @@
+# Locally calculated
+sha256 e68e4b2fe348ecb567c27985355dff75b65319a0f6595d44a18a8c5e05887cc3  gcc-arm-none-eabi-6-2017-q2-update-linux.tar.bz2
+sha256 fb31fbdfe08406ece43eef5df623c0b2deb8b53e405e2c878300f7a1f303ee52  gcc-arm-none-eabi-8-2018-q4-major-linux.tar.bz2
+sha256 bcd840f839d5bf49279638e9f67890b2ef3a7c9c7a9b25271e83ec4ff41d177a  gcc-arm-none-eabi-9-2019-q4-major-x86_64-linux.tar.bz2
+sha256 1f5b9309006737950b2218250e6bb392e2d68d4f1a764fe66be96e2a78888d83  gcc-arm-none-eabi-9-2019-q4-major-aarch64-linux.tar.bz2
