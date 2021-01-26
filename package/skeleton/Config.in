@@ -1,3 +1,10 @@
+if !BR2_PACKAGE_BUSYBOX && !BR2_PACKAGE_TOYBOX
+
+comment "You may need to enable other packages to get a working system"
+comment "You better know what you're doing!"
+
+endif
+
 config BR2_PACKAGE_SKELETON
 	bool
 	default y

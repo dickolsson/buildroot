@@ -1,0 +1,20 @@
+config BR2_PACKAGE_TOYBOX
+	bool "Toybox"
+	help
+	  Toybox combines many common Linux command line utilities together
+	  into a single BSD-licensed executable. It's simple, small, fast, and
+	  reasonably standards-compliant (POSIX-2008 and LSB 4.1).
+
+	  http://landley.net/toybox
+
+if BR2_PACKAGE_TOYBOX
+
+config BR2_PACKAGE_TOYBOX_CONFIG
+	string "Toybox configuration file to use?"
+	default "package/toybox/toybox_defconfig"
+	help
+	  Specifying a custom configuration file will enable a different set
+	  of commands to be built.
+
+endif
+

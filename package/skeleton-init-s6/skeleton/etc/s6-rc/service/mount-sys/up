@@ -1,0 +1,1 @@
+mount -wt sysfs sys /sys

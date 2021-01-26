@@ -1,0 +1,3 @@
+#!/bin/execlineb -S0
+
+s6-linux-init -B -c "/etc/s6-linux-init/current" -m 0022 -p "/bin" -- "$@"
