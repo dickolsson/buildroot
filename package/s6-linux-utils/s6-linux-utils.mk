@@ -26,8 +26,15 @@ define S6_LINUX_UTILS_BUILD_CMDS
 	$(TARGET_MAKE_ENV) $(MAKE) -C $(@D)
 endef
 
+S6_LINUX_UTILS_LSB = \
+	chroot freeramdisk hostname mount ps swapoff swapon umount
+S6_LINUX_UTILS_RENAME = \
+	$(if $(BR2_PACKAGE_S6_LINUX_UTILS_RENAME),$(S6_LINUX_UTILS_LSB))
+
 define S6_LINUX_UTILS_INSTALL_TARGET_CMDS
 	$(TARGET_MAKE_ENV) $(MAKE) -C $(@D) DESTDIR=$(TARGET_DIR) install
+	$(foreach util,$(S6_LINUX_UTILS_RENAME), \
+		mv -f $(TARGET_DIR)/bin/s6-$(util) $(TARGET_DIR)/bin/$(util);)
 endef
 
 $(eval $(generic-package))

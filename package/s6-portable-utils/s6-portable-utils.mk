@@ -26,8 +26,24 @@ define S6_PORTABLE_UTILS_BUILD_CMDS
 	$(TARGET_MAKE_ENV) $(MAKE) -C $(@D)
 endef
 
+S6_PORTABLE_UTILS_POSIX_FULL = \
+	basename cut dirname env false head mkdir mkfifo nice sleep true
+S6_PORTABLE_UTILS_POSIX_PART = \
+	cat echo expr ln ls seq sort sync tail test touch
+S6_PORTABLE_UTILS_POSIX_ALT = chmod chown grep
+
+S6_PORTABLE_UTILS_RENAME = \
+	$(if $(BR2_PACKAGE_S6_PORTABLE_UTILS_RENAME_POSIX_FULL), \
+		$(S6_PORTABLE_UTILS_POSIX_FULL)) \
+	$(if $(BR2_PACKAGE_S6_PORTABLE_UTILS_RENAME_POSIX_PART), \
+		$(S6_PORTABLE_UTILS_POSIX_PART)) \
+	$(if $(BR2_PACKAGE_S6_PORTABLE_UTILS_RENAME_POSIX_ALT), \
+		$(S6_PORTABLE_UTILS_POSIX_ALT))
+
 define S6_PORTABLE_UTILS_INSTALL_TARGET_CMDS
 	$(TARGET_MAKE_ENV) $(MAKE) -C $(@D) DESTDIR=$(TARGET_DIR) install
+	$(foreach util,$(S6_PORTABLE_UTILS_RENAME), \
+		mv -f $(TARGET_DIR)/bin/s6-$(util) $(TARGET_DIR)/bin/$(util);)
 endef
 
 $(eval $(generic-package))

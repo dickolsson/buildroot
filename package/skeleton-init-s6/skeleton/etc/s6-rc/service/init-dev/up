@@ -1,3 +1,4 @@
+#!/bin/execlineb -P
 foreground { ln -sf /proc/self/fd /dev }
 foreground { ln -sf /proc/kcore /dev/core }
 foreground { ln -sf loop0 /dev/loop }

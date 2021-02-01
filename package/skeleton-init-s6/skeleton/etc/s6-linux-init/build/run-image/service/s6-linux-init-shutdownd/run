@@ -1,5 +1,2 @@
 #!/bin/execlineb -P
-
-foreground { s6-rmrf fifo }
-foreground { s6-mkfifo -m 0600 fifo }
 s6-linux-init-shutdownd -c "/etc/s6-linux-init/current" -g 3000

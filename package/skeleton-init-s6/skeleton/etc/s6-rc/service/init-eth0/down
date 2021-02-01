@@ -1,0 +1,3 @@
+#!/bin/execlineb -P
+foreground { ip link set dev eth0 down }
+exit 0
