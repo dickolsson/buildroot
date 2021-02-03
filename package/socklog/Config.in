@@ -1,5 +1,6 @@
 config BR2_PACKAGE_SOCKLOG
 	bool "socklog"
+	select BR2_PACKAGE_SKALIBS
 	help
 	  socklog is a small and secure replacement for syslogd.
 

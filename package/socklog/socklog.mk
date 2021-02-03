@@ -4,24 +4,44 @@
 #
 ################################################################################
 
-SOCKLOG_VERSION = 2.0.3
-SOCKLOG_SITE = http://smarden.org/socklog2
-SOCKLOG_LICENSE = Public domain
-SOCKLOG_LICENSE_FILES = src/alloc.h
+SOCKLOG_VERSION = v2.2.2
+SOCKLOG_SITE = $(call github,just-containers,socklog,$(SOCKLOG_VERSION))
+SOCKLOG_LICENSE = BSD-3-Clause
+SOCKLOG_LICENSE_FILES = COPYING
+SOCKLOG_INSTALL_STAGING = YES
+SOCKLOG_DEPENDENCIES = skalibs
 
-SOCKLOG_DIR1 = $(BUILD_DIR)/socklog-$(SOCKLOG_VERSION)/socklog-$(SOCKLOG_VERSION)
+SOCKLOG_CONF_OPTS = \
+	--with-sysdeps=$(STAGING_DIR)/usr/lib/skalibs/sysdeps \
+	--with-include=$(STAGING_DIR)/include \
+	--with-dynlib=$(STAGING_DIR)/lib \
+	--with-lib=$(STAGING_DIR)/usr/lib/execline \
+	--with-lib=$(STAGING_DIR)/usr/lib/s6 \
+	--with-lib=$(STAGING_DIR)/usr/lib/s6-dns \
+	--with-lib=$(STAGING_DIR)/usr/lib/skalibs \
+	$(if $(BR2_STATIC_LIBS),,--disable-allstatic) \
+	$(SHARED_STATIC_LIBS_OPTS)
 
 define SOCKLOG_CONFIGURE_CMDS
-	echo "$(TARGET_CC) $(TARGET_CFLAGS)" > $(SOCKLOG_DIR1)/src/conf-cc
-	echo "$(TARGET_CC) $(TARGET_LDFLAGS)" > $(SOCKLOG_DIR1)/src/conf-ld
+	(cd $(@D); $(TARGET_CONFIGURE_OPTS) ./configure $(SOCKLOG_CONF_OPTS))
 endef
 
 define SOCKLOG_BUILD_CMDS
-	(cd $(SOCKLOG_DIR1); $(TARGET_MAKE_ENV) ./package/compile)
+	$(TARGET_MAKE_ENV) $(MAKE) -C $(@D)
 endef
 
+define SOCKLOG_REMOVE_STATIC_LIB_DIR
+	rm -rf $(TARGET_DIR)/usr/lib/socklog
+endef
+
+SOCKLOG_POST_INSTALL_TARGET_HOOKS += SOCKLOG_REMOVE_STATIC_LIB_DIR
+
 define SOCKLOG_INSTALL_TARGET_CMDS
-	$(INSTALL) $(SOCKLOG_DIR1)/command/socklog $(TARGET_DIR)/bin
+	$(TARGET_MAKE_ENV) $(MAKE) -C $(@D) DESTDIR=$(TARGET_DIR) install
+endef
+
+define SOCKLOG_INSTALL_STAGING_CMDS
+	$(TARGET_MAKE_ENV) $(MAKE) -C $(@D) DESTDIR=$(STAGING_DIR) install
 endef
 
 $(eval $(generic-package))

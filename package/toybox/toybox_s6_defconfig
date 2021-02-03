@@ -1,7 +1,7 @@
 #
 # Automatically generated make config: don't edit
 # ToyBox version: KCONFIG_VERSION
-# Mon Feb  1 09:55:50 2021
+# Mon Feb  1 20:51:10 2021
 #
 CONFIG_TOYBOX_CONTAINER=y
 CONFIG_TOYBOX_FIFREEZE=y
@@ -112,7 +112,7 @@ CONFIG_XARGS=y
 #
 # CONFIG_ARP is not set
 # CONFIG_ARPING is not set
-# CONFIG_BC is not set
+CONFIG_BC=y
 # CONFIG_BOOTCHARTD is not set
 # CONFIG_BRCTL is not set
 # CONFIG_CROND is not set
@@ -300,7 +300,7 @@ CONFIG_TUNCTL=y
 # Linux Standard Base commands
 #
 CONFIG_DMESG=y
-# CONFIG_GZIP is not set
+CONFIG_GZIP=y
 CONFIG_GUNZIP=y
 CONFIG_ZCAT=y
 # CONFIG_HOSTNAME is not set
