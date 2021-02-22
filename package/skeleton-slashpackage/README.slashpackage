@@ -1,0 +1,81 @@
+The /package hierarchy
+======================
+
+Original text source: https://cr.yp.to/slashpackage.html
+
+Package management
+------------------
+
+A package manager keeps a database saying which files are in which
+packages. It provides some useful batch operations on the database. One
+operation is to extract a package from a tarball, simultaneously adding
+the package's files to the database. Another operation is to remove all
+the files in a package, simultaneously removing the package's files from
+the database.
+
+Most package managers don't provide any other operations: for example,
+adding new files to a package, or declaring that some existing files
+form a package. What happens if a developer compiles and installs a
+program, and wants the program to be registered with the package
+manager? He has to collect the installed files into a tarball, remove
+the files, and then feed the tarball to the package manager. If he adds
+another piece to the program, he again has to collect it and remove it
+and install it.
+
+In contrast, /package reuses the filesystem as the database:
+
+ * Downloading or creating files in /package/admin/daemontools-0.76
+   automatically registers them as being part of the admin/daemontools
+   package, version 0.76. We don't need special database-editing tools;
+   we simply use standard tools for handling the filesystem.
+
+ * A source package is compiled in its package directory. It doesn't
+   need to be separately installed. Exception: Adding programs to the
+   commands-available-to-users list means creating symbolic links in a
+   central directory, /command, as well as in /usr/local/bin for
+   compatibility. 
+
+Package directories are identified as non-sticky subdirectories of
+/package, and non-sticky subdirectories of sticky subdirectories of
+/package, and non-sticky subdirectories of sticky subdirectories of
+sticky subdirectories of /package, and so on. For example,
+/package/admin is sticky, and /package/admin/daemontools-0.76 is not,
+so /package/admin/daemontools-0.76 is a package directory. /package
+itself is also sticky, to simplify scripts.
+
+By convention, package tarballs unpack in /package, and they include all
+necessary subdirectories, so that system administrators do not need to
+create directories in advance. For example, the admin/daemontools-0.76
+tarball includes a sticky admin directory as well as the
+admin/daemontools-0.76 hierarchy. Note that tarballs have to be
+extracted with tar -xpf, not tar -xf, to preserve sticky bits.
+
+Finding files
+-------------
+
+Filesystem Hierarchy Standard (FHS) 2.2: "This standard enables software
+to predict the location of installed files and directories, and users to
+predict the location of installed files and directories."
+
+/package does the same thing, and does it much more reliably. FHS
+doesn't actually let software and users confidently access files;
+/package does.
+
+Example: Is the lynx configuration file in /etc/lynx.cfg, or is it in
+/usr/local/etc/lynx.cfg? With FHS, software and users can't tell. The
+answer depends on whether lynx was a "system" package or a "local"
+package.
+
+In contrast, /package provides names that don't change when "local"
+packages are integrated into "the system."
+
+Another example: Is the statistics program in the hylafax package called
+xferstats, or xferstat, or xferfaxstats? With FHS, software and users
+can't tell. The original xferstats name was used by a different
+statistics program in the wu-ftpd package; one OS distributor resolved
+the conflict by changing the name to xferstat; another OS distributor
+resolved the conflict by changing the name to xferfaxstats.
+
+In contrast, names in /package are globally allocated, so conflicts
+don't happen in the first place. This is one of the essential features
+of /package.

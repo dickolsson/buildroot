@@ -11,13 +11,7 @@ MDEVD_LICENSE_FILES = COPYING
 MDEVD_INSTALL_STAGING = YES
 MDEVD_DEPENDENCIES = skalibs
 
-MDEVD_CONF_OPTS = \
-	--with-sysdeps=$(STAGING_DIR)/usr/lib/skalibs/sysdeps \
-	--with-include=$(STAGING_DIR)/include \
-	--with-dynlib=$(STAGING_DIR)/lib \
-	--with-lib=$(STAGING_DIR)/usr/lib/skalibs \
-	$(if $(BR2_STATIC_LIBS),,--disable-allstatic) \
-	$(SHARED_STATIC_LIBS_OPTS)
+MDEVD_CONF_OPTS = $(SHARED_SKALIBS_CONF_OPTS)
 
 define MDEVD_CONFIGURE_CMDS
 	(cd $(@D); $(TARGET_CONFIGURE_OPTS) ./configure $(MDEVD_CONF_OPTS))

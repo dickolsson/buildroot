@@ -12,13 +12,19 @@ EXECLINE_INSTALL_STAGING = YES
 EXECLINE_DEPENDENCIES = skalibs
 
 EXECLINE_CONF_OPTS = \
-	--shebangdir=/bin \
-	--with-sysdeps=$(STAGING_DIR)/usr/lib/skalibs/sysdeps \
-	--with-include=$(STAGING_DIR)/include \
-	--with-dynlib=$(STAGING_DIR)/lib \
-	--with-lib=$(STAGING_DIR)/usr/lib/skalibs \
-	$(if $(BR2_STATIC_LIBS),,--disable-allstatic) \
-	$(SHARED_STATIC_LIBS_OPTS)
+	$(SHARED_SKALIBS_CONF_OPTS)
+
+# SHARED_EXECLINE_CONF_OPTS can be used by dependant packages.
+ifeq ($(BR2_SLASHPACKAGE),y)
+SHARED_EXECLINE_CONF_OPTS = \
+	--enable-slashpackage \
+	--with-include=$(call slashpackage,admin,execline)/include \
+	--with-dynlib=$(call slashpackage,admin,execline)/library.so \
+	--with-lib=$(call slashpackage,admin,execline)/library
+else
+SHARED_EXECLINE_CONF_OPTS = \
+	--with-lib=$(STAGING_DIR)/lib/execline
+endif
 
 define EXECLINE_CONFIGURE_CMDS
 	(cd $(@D); $(TARGET_CONFIGURE_OPTS) ./configure $(EXECLINE_CONF_OPTS))
@@ -27,12 +33,6 @@ endef
 define EXECLINE_BUILD_CMDS
 	$(TARGET_MAKE_ENV) $(MAKE) -C $(@D)
 endef
-
-define EXECLINE_REMOVE_STATIC_LIB_DIR
-	rm -rf $(TARGET_DIR)/usr/lib/execline
-endef
-
-EXECLINE_POST_INSTALL_TARGET_HOOKS += EXECLINE_REMOVE_STATIC_LIB_DIR
 
 define EXECLINE_INSTALL_TARGET_CMDS
 	$(TARGET_MAKE_ENV) $(MAKE) -C $(@D) DESTDIR=$(TARGET_DIR) install
@@ -44,11 +44,13 @@ endef
 
 HOST_EXECLINE_DEPENDENCIES = host-skalibs
 
-# Set --shebangdir to /bin, as this value is used by the host variant of
-# s6-rc when generating execline scripts for the target.
+# The host package does not have a run-time dependency on the
+# --shebangdir and --libexecdir options. But they must align with the
+# target package since they affect the output.
 HOST_EXECLINE_CONF_OPTS = \
 	--prefix=$(HOST_DIR) \
-	--shebangdir=/bin \
+	--shebangdir=$(if $(BR2_SLASHPACKAGE),/command,/bin) \
+	--libexecdir=$(if $(BR2_SLASHPACKAGE),/command,/libexec) \
 	--with-sysdeps=$(HOST_DIR)/lib/skalibs/sysdeps \
 	--with-include=$(HOST_DIR)/include \
 	--with-dynlib=$(HOST_DIR)/lib \

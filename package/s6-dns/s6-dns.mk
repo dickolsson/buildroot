@@ -12,12 +12,18 @@ S6_DNS_INSTALL_STAGING = YES
 S6_DNS_DEPENDENCIES = skalibs
 
 S6_DNS_CONF_OPTS = \
-	--with-sysdeps=$(STAGING_DIR)/usr/lib/skalibs/sysdeps \
-	--with-include=$(STAGING_DIR)/include \
-	--with-dynlib=$(STAGING_DIR)/lib \
-	--with-lib=$(STAGING_DIR)/usr/lib/skalibs \
-	$(if $(BR2_STATIC_LIBS),,--disable-allstatic) \
-	$(SHARED_STATIC_LIBS_OPTS)
+	$(SHARED_SKALIBS_CONF_OPTS)
+
+# SHARED_S6_DNS_CONF_OPTS can be used by dependant packages.
+ifeq ($(BR2_SLASHPACKAGE),y)
+SHARED_S6_DNS_CONF_OPTS = \
+	--with-include=$(call slashpackage,web,s6-dns)/include \
+	--with-dynlib=$(call slashpackage,web,s6-dns)/library.so \
+	--with-lib=$(call slashpackage,web,s6-dns)/library
+else
+SHARED_S6_DNS_OPTS = \
+	--with-lib=$(STAGING_DIR)/lib/s6-dns
+endif
 
 define S6_DNS_CONFIGURE_CMDS
 	(cd $(@D); $(TARGET_CONFIGURE_OPTS) ./configure $(S6_DNS_CONF_OPTS))

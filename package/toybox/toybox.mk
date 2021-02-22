@@ -22,7 +22,8 @@ define TOYBOX_BUILD_CMDS
 endef
 
 define TOYBOX_INSTALL_TARGET_CMDS
-	$(TARGET_MAKE_ENV) $(MAKE) $(TOYBOX_MAKE_OPTS) -C $(@D) install
+	$(TARGET_MAKE_ENV) $(MAKE) $(TOYBOX_MAKE_OPTS) -C $(@D) \
+		$(if $(BR2_SLASHPACKAGE),install_slashpackage,install)
 endef
 
 $(eval $(kconfig-package))

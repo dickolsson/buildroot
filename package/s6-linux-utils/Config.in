@@ -7,13 +7,3 @@ config BR2_PACKAGE_S6_LINUX_UTILS
 	  system utilities.
 
 	  http://skarnet.org/software/s6-linux-utils/
-
-if BR2_PACKAGE_S6_LINUX_UTILS
-
-config BR2_PACKAGE_S6_LINUX_UTILS_RENAME
-	bool "Rename utilities"
-	help
-	  Rename utikities to their LSB-equivalent name. This might help
-	  building a more coherent base system with s6-linux-utils.
-
-endif

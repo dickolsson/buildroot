@@ -1,0 +1,9 @@
+config BR2_PACKAGE_BMAKE
+	bool "bmake"
+	select BR2_PACKAGE_MKSH
+	help
+	  bmake is derived from NetBSD's make(1), its goal is to be a
+	  portable version of same, so new features are added via
+	  imports of NetBSD's make.
+
+	  http://www.crufty.net/help/sjg/bmake.html

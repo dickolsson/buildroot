@@ -408,6 +408,13 @@ else ifeq ($(BR2_SHARED_STATIC_LIBS),y)
 SHARED_STATIC_LIBS_OPTS = --enable-static --enable-shared
 endif
 
+# Convenience function for getting a slashpackage path.
+# Packages built with slashpackage should always refer to libraries
+# in the staging directory.
+define slashpackage
+$(STAGING_DIR)/package/$(1)/$(2)-$($(call UPPERCASE,$(2))_VERSION)
+endef
+
 ifeq ($(BR2_COMPILER_PARANOID_UNSAFE_PATH),y)
 export BR_COMPILER_PARANOID_UNSAFE_PATH=enabled
 endif

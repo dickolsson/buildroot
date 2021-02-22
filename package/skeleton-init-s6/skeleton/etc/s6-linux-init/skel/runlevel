@@ -1,2 +1,0 @@
-#!/bin/execlineb -S1
-exec s6-rc -v2 -up change "$1"

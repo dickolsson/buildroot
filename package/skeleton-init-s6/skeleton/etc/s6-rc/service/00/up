@@ -1,2 +1,0 @@
-if { echo "init stage2 starting" }
-hostname skabox

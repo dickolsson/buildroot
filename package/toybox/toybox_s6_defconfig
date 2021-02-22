@@ -1,7 +1,7 @@
 #
 # Automatically generated make config: don't edit
 # ToyBox version: KCONFIG_VERSION
-# Mon Feb  1 20:51:10 2021
+# Mon Feb 22 18:38:29 2021
 #
 CONFIG_TOYBOX_CONTAINER=y
 CONFIG_TOYBOX_FIFREEZE=y
@@ -118,7 +118,7 @@ CONFIG_BC=y
 # CONFIG_CROND is not set
 # CONFIG_CRONTAB is not set
 # CONFIG_DD is not set
-# CONFIG_DHCP is not set
+CONFIG_DHCP=y
 # CONFIG_DHCP6 is not set
 # CONFIG_DHCPD is not set
 # CONFIG_DEBUG_DHCP is not set
@@ -155,7 +155,7 @@ CONFIG_MODPROBE=y
 # CONFIG_OPENVT is not set
 # CONFIG_DEALLOCVT is not set
 # CONFIG_READELF is not set
-# CONFIG_ROUTE is not set
+CONFIG_ROUTE=y
 # CONFIG_SH is not set
 # CONFIG_CD is not set
 # CONFIG_EXIT is not set
@@ -179,7 +179,7 @@ CONFIG_MODPROBE=y
 # CONFIG_USERADD is not set
 # CONFIG_USERDEL is not set
 # CONFIG_VI is not set
-# CONFIG_WGET is not set
+CONFIG_WGET=y
 # CONFIG_XZCAT is not set
 
 #
@@ -286,15 +286,15 @@ CONFIG_YES=y
 #
 # CONFIG_FTPGET is not set
 # CONFIG_FTPPUT is not set
-# CONFIG_IFCONFIG is not set
+CONFIG_IFCONFIG=y
 # CONFIG_MICROCOM is not set
-CONFIG_NETCAT=y
-CONFIG_NETCAT_LISTEN=y
-# CONFIG_NETSTAT is not set
+# CONFIG_NETCAT is not set
+# CONFIG_NETCAT_LISTEN is not set
+CONFIG_NETSTAT=y
 CONFIG_PING=y
-CONFIG_RFKILL=y
-CONFIG_SNTP=y
-CONFIG_TUNCTL=y
+# CONFIG_RFKILL is not set
+# CONFIG_SNTP is not set
+# CONFIG_TUNCTL is not set
 
 #
 # Linux Standard Base commands

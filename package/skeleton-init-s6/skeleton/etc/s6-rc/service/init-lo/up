@@ -1,3 +1,0 @@
-#!/bin/execlineb -P
-if { ip addr add 127.0.0.1/8 dev lo }
-ip link set dev lo up

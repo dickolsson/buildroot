@@ -9,17 +9,12 @@ S6_RC_SITE = http://skarnet.org/software/s6-rc
 S6_RC_LICENSE = ISC
 S6_RC_LICENSE_FILES = COPYING
 S6_RC_INSTALL_STAGING = YES
-S6_RC_DEPENDENCIES = s6
+S6_RC_DEPENDENCIES = skalibs s6 execline
 
 S6_RC_CONF_OPTS = \
-	--with-sysdeps=$(STAGING_DIR)/usr/lib/skalibs/sysdeps \
-	--with-include=$(STAGING_DIR)/include \
-	--with-dynlib=$(STAGING_DIR)/lib \
-	--with-lib=$(STAGING_DIR)/usr/lib/execline \
-	--with-lib=$(STAGING_DIR)/usr/lib/s6 \
-	--with-lib=$(STAGING_DIR)/usr/lib/skalibs \
-	$(if $(BR2_STATIC_LIBS),,--disable-allstatic) \
-	$(SHARED_STATIC_LIBS_OPTS)
+	$(SHARED_SKALIBS_CONF_OPTS) \
+	$(SHARED_EXECLINE_CONF_OPTS) \
+	$(SHARED_S6_CONF_OPTS)
 
 define S6_RC_CONFIGURE_CMDS
 	(cd $(@D); $(TARGET_CONFIGURE_OPTS) ./configure $(S6_RC_CONF_OPTS))
@@ -29,12 +24,6 @@ define S6_RC_BUILD_CMDS
 	$(TARGET_MAKE_ENV) $(MAKE) -C $(@D)
 endef
 
-define S6_RC_REMOVE_STATIC_LIB_DIR
-	rm -rf $(TARGET_DIR)/usr/lib/s6-rc
-endef
-
-S6_RC_POST_INSTALL_TARGET_HOOKS += S6_RC_REMOVE_STATIC_LIB_DIR
-
 define S6_RC_INSTALL_TARGET_CMDS
 	$(TARGET_MAKE_ENV) $(MAKE) -C $(@D) DESTDIR=$(TARGET_DIR) install
 endef
@@ -43,11 +32,14 @@ define S6_RC_INSTALL_STAGING_CMDS
 	$(TARGET_MAKE_ENV) $(MAKE) -C $(@D) DESTDIR=$(STAGING_DIR) install
 endef
 
-HOST_S6_RC_DEPENDENCIES = host-s6
+HOST_S6_RC_DEPENDENCIES = host-skalibs host-s6 host-execline
 
+# The host package does not have a run-time dependency on the
+# --libexecdir option. But it must align with the target package since
+# it affects the output.
 HOST_S6_RC_CONF_OPTS = \
 	--prefix=$(HOST_DIR) \
-	--libexecdir=/libexec \
+	--libexecdir=$(if $(BR2_SLASHPACKAGE),/command,/libexec) \
 	--with-sysdeps=$(HOST_DIR)/lib/skalibs/sysdeps \
 	--with-include=$(HOST_DIR)/include \
 	--with-dynlib=$(HOST_DIR)/lib \

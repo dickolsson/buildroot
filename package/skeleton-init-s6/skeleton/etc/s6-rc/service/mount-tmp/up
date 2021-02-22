@@ -1,1 +1,0 @@
-mount -wt tmpfs -o nodev,mode=1777 tmpfs /tmp

@@ -1,0 +1,5 @@
+The slashpackage skeleton
+=========================
+
+This skeleton provides a small compatibility-layer for the slashcommand
+part of the slashpackage standard.

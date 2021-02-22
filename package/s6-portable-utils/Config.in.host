@@ -1,0 +1,7 @@
+config BR2_PACKAGE_HOST_S6_PORTABLE_UTILS
+	bool "host s6-portable-utils"
+	help
+	  This package provides the host variant of s6-portable-utils,
+	  which is useful when bootstrapping a s6-based system.
+
+	  http://skarnet.org/software/s6-portable-utils/

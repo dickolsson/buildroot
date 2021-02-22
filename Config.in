@@ -610,6 +610,22 @@ config BR2_SHARED_STATIC_LIBS
 
 endchoice
 
+config BR2_SLASHPACKAGE
+	bool "Prefer slashpackage when installing packages"
+	depends on !BR2_ROOTFS_MERGED_USR
+	default y if BR2_PACKAGE_SKELETON_SLASHPACKAGE
+	help
+	  The slashpackage convention is a directory and naming
+	  scheme used to make package management easier on a running
+	  system with atomic upgrades. It's sometimes used by packages
+	  that emphasize simplicity and correctness. Many packages that
+	  stem from D. J. Bernstein's daemontools suite also use it.
+
+	  Your rootfs overlay need to have the /package and /command
+	  directories.
+
+	  https://cr.yp.to/slashpackage.html
+
 config BR2_PACKAGE_OVERRIDE_FILE
 	string "location of a package override file"
 	default "$(CONFIG_DIR)/local.mk"

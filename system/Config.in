@@ -96,10 +96,9 @@ config BR2_INIT_BUSYBOX
 
 config BR2_INIT_S6
 	bool "s6"
-	select BR2_PACKAGE_S6_LINUX_INIT
-	select BR2_PACKAGE_S6_LINUX_UTILS
-	select BR2_PACKAGE_S6_RC
-	select BR2_PACKAGE_SKELETON_INIT_S6 if BR2_ROOTFS_SKELETON_DEFAULT
+	select BR2_SLASHPACKAGE
+	select BR2_PACKAGE_SKABOX
+	select BR2_PACKAGE_SKELETON_SLASHPACKAGE if BR2_ROOTFS_SKELETON_DEFAULT
 
 config BR2_INIT_SYSV
 	bool "systemV"
@@ -418,6 +417,7 @@ endif # BR2_ROOTFS_SKELETON_DEFAULT
 
 config BR2_SYSTEM_DEFAULT_PATH
 	string "Set the system's default PATH"
+	default "/command:/bin:/sbin:/usr/bin:/usr/sbin" if BR2_SLASHPACKAGE
 	default "/usr/bin:/usr/sbin" if BR2_ROOTFS_MERGED_USR
 	default "/bin:/sbin:/usr/bin:/usr/sbin" if !BR2_ROOTFS_MERGED_USR
 	help

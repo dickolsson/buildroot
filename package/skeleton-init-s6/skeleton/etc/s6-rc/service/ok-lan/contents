@@ -1,4 +1,0 @@
-init-lo
-init-eth0
-dhcpcd-eth0-pipeline
-dropbear-pipeline

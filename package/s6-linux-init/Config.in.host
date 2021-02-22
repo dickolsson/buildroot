@@ -1,0 +1,8 @@
+config BR2_PACKAGE_HOST_S6_LINUX_INIT
+	bool "host s6-linux-init"
+	help
+	  This package provides the host variant of the s6-linux-init
+	  tools, required to build the init program and other necessary
+	  scripts.
+
+	  http://skarnet.org/software/s6-linux-init/

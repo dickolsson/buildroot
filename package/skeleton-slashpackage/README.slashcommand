@@ -1,0 +1,7 @@
+The /command directory
+======================
+
+Original text source: https://cr.yp.to/slashcommand.html
+
+Names under /command are globally allocated, to prevent accidental
+collisions.

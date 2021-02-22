@@ -1,2 +1,0 @@
-#!/bin/execlineb -S0
-s6-linux-init-hpr -p $@

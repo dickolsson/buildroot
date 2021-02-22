@@ -29,4 +29,15 @@ define MKSH_ADD_MKSH_TO_SHELLS
 endef
 MKSH_TARGET_FINALIZE_HOOKS += MKSH_ADD_MKSH_TO_SHELLS
 
+define HOST_MKSH_BUILD_CMDS
+	cd $(@D) && $(HOST_MAKE_ENV) \
+		TARGET_OS=Linux \
+		sh ./Build.sh
+endef
+
+define HOST_MKSH_INSTALL_CMDS
+	$(INSTALL) -m 0755 -D $(@D)/mksh $(HOST_DIR)/bin/mksh
+endef
+
 $(eval $(generic-package))
+$(eval $(host-generic-package))

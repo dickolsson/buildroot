@@ -1,0 +1,26 @@
+config BR2_PACKAGE_SKABOX
+	bool "Skabox"
+	depends on BR2_INIT_S6
+	select BR2_PACKAGE_S6_LINUX_INIT
+	select BR2_PACKAGE_S6_RC
+	select BR2_PACKAGE_S6_LINUX_UTILS
+	select BR2_PACKAGE_S6_PORTABLE_UTILS
+	select BR2_PACKAGE_S6_NETWORKING
+	select BR2_PACKAGE_MDEVD
+	select BR2_PACKAGE_BEARSSL
+	select BR2_PACKAGE_SOCKLOG
+	help
+	  Skabox is simple and configurable rootfs overlay for s6-based
+	  systems with a small set of user-land utilities that together
+	  makes up a secure base system.
+
+	  http://senzilla.io/software/skabox
+
+if BR2_PACKAGE_SKABOX
+
+config BR2_PACKAGE_SKABOX_CONFIG
+	string "Skabox configuration file"
+	default "package/skabox/skabox_defconfig"
+
+endif
+
