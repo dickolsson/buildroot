@@ -1,7 +1,6 @@
 menu "Target packages"
 
 	source "package/busybox/Config.in"
-	source "package/skabox/Config.in"
 	source "package/toybox/Config.in"
 	source "package/skeleton/Config.in"
 	source "package/skeleton-custom/Config.in"

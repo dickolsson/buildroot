@@ -2,6 +2,18 @@ config BR2_PACKAGE_SKELETON_SLASHPACKAGE
 	bool
 	select BR2_PACKAGE_HAS_SKELETON
 	select BR2_PACKAGE_SKELETON_INIT_COMMON
+	help
+	  The skeleton-slashpackage is an external package providing a
+	  configurable rootfs skeleton based on the slashpackage
+	  convention and built for skarnet's supervision suite; s6.
 
 config BR2_PACKAGE_PROVIDES_SKELETON
 	default "skeleton-slashpackage" if BR2_PACKAGE_SKELETON_SLASHPACKAGE
+
+if BR2_PACKAGE_SKELETON_SLASHPACKAGE
+
+config BR2_PACKAGE_SKELETON_SLASHPACKAGE_CONFIG
+	string "skeleton-slashpackage configuration file"
+	default "package/skeleton-slashpackage/defconfig"
+
+endif
